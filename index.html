@@ -3,83 +3,1899 @@
     <html lang="de">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Mitglieder Übersicht</title>
+        <title>Dynamic Performance Matrix</title>
+        <style>
+            body {
+                background-image: url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG44eXVpMHh1c2xvbnA4bGUydHA5MWZydXE0djIzYTkwaG8wc281MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JpG2A9P3dPHXaTYrwu/giphy.gif');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                margin: 0;
+                overflow-x: hidden;
+            }
+            .bg-overlay { background-color: rgba(0, 0, 0, 0.75); min-height: 100vh; width: 100vw; }
+            .compact-cell { width: calc(100vw / 26.5); min-width: 0; }
+
+            .mode-netto .val-brutto { display: none; }
+            .mode-brutto .val-netto { display: none; }
+
+            .active-label {
+                transition: all 0.3s ease;
+            }
+        </style>
     </head>
-    <body class="bg-gray-50 py-10 px-5 font-sans">
-        <div class="max-w-4xl mx-auto">
-            <header class="mb-10 text-center">
-                <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">Team Dashboard</h1>
-                <p class="text-gray-500 mt-2">Aktuelle Übersicht der Einheiten pro Mitglied</p>
+    <body class="text-white font-sans text-[10px] mode-netto" id="main-body">
+        <div class="bg-overlay py-4 px-2">
+            <header class="flex justify-between items-center max-w-[98vw] mx-auto mb-4">
+                <h1 class="text-lg font-black uppercase tracking-[0.3em] text-emerald-400">Team Dashboard 2026</h1>
+
+                <div class="flex gap-4 items-center bg-black/40 px-4 py-2 rounded-full border border-white/10">
+                    <span id="label-netto" class="uppercase font-bold tracking-widest text-emerald-400 opacity-100 transition-opacity">Netto-Ansicht</span>
+                    <span class="text-gray-600">|</span>
+                    <span id="label-brutto" class="uppercase font-bold tracking-widest text-amber-500 opacity-30 transition-opacity">Brutto-Ansicht</span>
+                </div>
             </header>
 
-            <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase">Profil</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase">Name</th>
-                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase text-right">Einheiten</th>
+            <div class="w-full bg-black/40 backdrop-blur-3xl rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+                <table class="w-full table-fixed border-collapse">
+                    <thead>
+                        <tr class="bg-white/10">
+                            <th class="w-16 p-2 border-r border-white/10 uppercase font-bold text-gray-500">Monat</th>
+                            
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Erik+Baumann&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Erik</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Sarah+Schmidt&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Sarah</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Leon+Wagner&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Leon</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Julia+Weber&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Julia</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Marc+Fischer&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Marc</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Lisa+Meyer&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Lisa</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Thomas+Kraft&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Thomas</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Elena+Voss&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Elena</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Kevin+Schulz&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Kevin</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Maren+Jung&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Maren</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Sven+Berger&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Sven</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Nina+Peters&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Nina</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Paul+Richter&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Paul</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Clara+Zimmermann&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Clara</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Olaf+Neumann&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Olaf</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Hannah+Weiß&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Hannah</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Felix+Schwarz&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Felix</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Laura+Koch&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Laura</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Simon+Braun&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Simon</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Tanja+Lange&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Tanja</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Dennis+Jäger&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Dennis</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Petra+Krüger&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Petra</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Moritz+Frank&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Moritz</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Sabine+Hahn&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Sabine</div>
+                            </th> 
+                            <th class="p-1 border-r border-white/10 text-center compact-cell">
+                                <img src="https://ui-avatars.com/api/?name=Christian+Otto&background=random&color=fff&size=40" 
+                                     class="w-6 h-6 rounded-full mx-auto mb-1 border border-white/20">
+                                <div class="text-[7px] font-bold uppercase truncate overflow-hidden whitespace-nowrap px-1">Christian</div>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100">
+                    <tbody>
     
-                        <tr class="hover:bg-blue-50 transition-colors duration-200">
-                            <td class="px-6 py-4">
-                                <img src="https://ui-avatars.com/api/?name=Alex+Müller&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Jan
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-800">Alex Müller</td>
-                            <td class="px-6 py-4 text-right">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
-                                    45
-                                </span>
-                            </td>
-                        </tr>
         
-                        <tr class="hover:bg-blue-50 transition-colors duration-200">
-                            <td class="px-6 py-4">
-                                <img src="https://ui-avatars.com/api/?name=Sarah+Schmidt&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-800">Sarah Schmidt</td>
-                            <td class="px-6 py-4 text-right">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
-                                    20
-                                </span>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
                             </td>
-                        </tr>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">5</span>
+                                <span class="val-brutto text-amber-400">9</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">17</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">40</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">6</span>
+                                <span class="val-brutto text-amber-400">10</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">27</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Feb
+                            </td>
         
-                        <tr class="hover:bg-blue-50 transition-colors duration-200">
-                            <td class="px-6 py-4">
-                                <img src="https://ui-avatars.com/api/?name=Jordan+Dash&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">20</span>
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-800">Jordan Dash</td>
-                            <td class="px-6 py-4 text-right">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
-                                    112
-                                </span>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">14</span>
                             </td>
-                        </tr>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">11</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">32</span>
+                                <span class="val-brutto text-amber-400">45</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">17</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">13</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">11</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Mär
+                            </td>
         
-                        <tr class="hover:bg-blue-50 transition-colors duration-200">
-                            <td class="px-6 py-4">
-                                <img src="https://ui-avatars.com/api/?name=Lina+Meyer&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">19</span>
                             </td>
-                            <td class="px-6 py-4 font-medium text-gray-800">Lina Meyer</td>
-                            <td class="px-6 py-4 text-right">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
-                                    8
-                                </span>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
                             </td>
-                        </tr>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">6</span>
+                                <span class="val-brutto text-amber-400">10</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">31</span>
+                                <span class="val-brutto text-amber-400">44</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">26</span>
+                                <span class="val-brutto text-amber-400">36</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">29</span>
+                                <span class="val-brutto text-amber-400">41</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Apr
+                            </td>
         
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">29</span>
+                                <span class="val-brutto text-amber-400">40</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">40</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">13</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">31</span>
+                                <span class="val-brutto text-amber-400">44</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">27</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">11</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Mai
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">13</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">39</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">11</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">27</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">33</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">13</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">33</span>
+                                <span class="val-brutto text-amber-400">46</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">6</span>
+                                <span class="val-brutto text-amber-400">9</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">26</span>
+                                <span class="val-brutto text-amber-400">37</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Jun
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">40</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">35</span>
+                                <span class="val-brutto text-amber-400">48</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">35</span>
+                                <span class="val-brutto text-amber-400">48</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">38</span>
+                                <span class="val-brutto text-amber-400">52</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">33</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">39</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">33</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Jul
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">32</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">38</span>
+                                <span class="val-brutto text-amber-400">52</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">33</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">32</span>
+                                <span class="val-brutto text-amber-400">44</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">26</span>
+                                <span class="val-brutto text-amber-400">36</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">40</span>
+                                <span class="val-brutto text-amber-400">55</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">39</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">27</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Aug
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">35</span>
+                                <span class="val-brutto text-amber-400">48</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">14</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">33</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">38</span>
+                                <span class="val-brutto text-amber-400">52</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">26</span>
+                                <span class="val-brutto text-amber-400">37</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Sep
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">32</span>
+                                <span class="val-brutto text-amber-400">45</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">40</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">8</span>
+                                <span class="val-brutto text-amber-400">12</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">35</span>
+                                <span class="val-brutto text-amber-400">48</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">7</span>
+                                <span class="val-brutto text-amber-400">10</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">20</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Okt
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">29</span>
+                                <span class="val-brutto text-amber-400">39</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">34</span>
+                                <span class="val-brutto text-amber-400">47</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">31</span>
+                                <span class="val-brutto text-amber-400">43</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">10</span>
+                                <span class="val-brutto text-amber-400">15</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">37</span>
+                                <span class="val-brutto text-amber-400">51</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">23</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">9</span>
+                                <span class="val-brutto text-amber-400">13</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">27</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">26</span>
+                                <span class="val-brutto text-amber-400">36</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Nov
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">31</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">19</span>
+                                <span class="val-brutto text-amber-400">27</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">12</span>
+                                <span class="val-brutto text-amber-400">18</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">36</span>
+                                <span class="val-brutto text-amber-400">50</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">35</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">33</span>
+                                <span class="val-brutto text-amber-400">46</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">27</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">39</span>
+                                <span class="val-brutto text-amber-400">54</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">11</span>
+                                <span class="val-brutto text-amber-400">16</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">29</span>
+                                <span class="val-brutto text-amber-400">41</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">27</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">39</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">14</span>
+                                <span class="val-brutto text-amber-400">21</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">23</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">29</span>
+                            </td>
+            </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+                            <td class="p-2 font-bold border-r border-white/10 bg-black/20 text-center text-gray-400">
+                                Dez
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">28</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">26</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">35</span>
+                                <span class="val-brutto text-amber-400">48</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">31</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">15</span>
+                                <span class="val-brutto text-amber-400">22</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">40</span>
+                                <span class="val-brutto text-amber-400">55</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">30</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">18</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">38</span>
+                                <span class="val-brutto text-amber-400">52</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">25</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">31</span>
+                                <span class="val-brutto text-amber-400">42</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">20</span>
+                                <span class="val-brutto text-amber-400">28</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">16</span>
+                                <span class="val-brutto text-amber-400">24</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">44</span>
+                                <span class="val-brutto text-amber-400">60</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">21</span>
+                                <span class="val-brutto text-amber-400">30</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">27</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">13</span>
+                                <span class="val-brutto text-amber-400">19</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">33</span>
+                                <span class="val-brutto text-amber-400">46</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">22</span>
+                                <span class="val-brutto text-amber-400">32</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">32</span>
+                                <span class="val-brutto text-amber-400">45</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">17</span>
+                                <span class="val-brutto text-amber-400">25</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">27</span>
+                                <span class="val-brutto text-amber-400">38</span>
+                            </td>
+            
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-bold text-[11px]">
+                                <span class="val-netto text-emerald-300">24</span>
+                                <span class="val-brutto text-amber-400">34</span>
+                            </td>
+            </tr>
+                        <tr class="bg-white/5 border-t-2 border-white/20">
+                            <td class="p-2 font-black border-r border-white/10 text-center text-white uppercase tracking-tighter">
+                                TOTAL
+                            </td>
+    
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">225</span>
+                                <span class="val-brutto text-amber-500">308</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">147</span>
+                                <span class="val-brutto text-amber-500">215</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">330</span>
+                                <span class="val-brutto text-amber-500">447</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">201</span>
+                                <span class="val-brutto text-amber-500">287</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">113</span>
+                                <span class="val-brutto text-amber-500">172</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">400</span>
+                                <span class="val-brutto text-amber-500">555</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">155</span>
+                                <span class="val-brutto text-amber-500">240</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">269</span>
+                                <span class="val-brutto text-amber-500">373</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">156</span>
+                                <span class="val-brutto text-amber-500">226</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">360</span>
+                                <span class="val-brutto text-amber-500">502</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">111</span>
+                                <span class="val-brutto text-amber-500">170</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">222</span>
+                                <span class="val-brutto text-amber-500">308</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">290</span>
+                                <span class="val-brutto text-amber-500">401</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">180</span>
+                                <span class="val-brutto text-amber-500">258</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">137</span>
+                                <span class="val-brutto text-amber-500">204</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">422</span>
+                                <span class="val-brutto text-amber-500">585</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">189</span>
+                                <span class="val-brutto text-amber-500">273</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">246</span>
+                                <span class="val-brutto text-amber-500">347</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">101</span>
+                                <span class="val-brutto text-amber-500">152</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">313</span>
+                                <span class="val-brutto text-amber-500">441</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">190</span>
+                                <span class="val-brutto text-amber-500">281</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">295</span>
+                                <span class="val-brutto text-amber-500">414</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">139</span>
+                                <span class="val-brutto text-amber-500">207</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">240</span>
+                                <span class="val-brutto text-amber-500">342</span>
+                            </td>
+        
+                            <td class="p-2 border-r border-white/10 text-center compact-cell font-black text-[11px]">
+                                <span class="val-netto text-emerald-400">214</span>
+                                <span class="val-brutto text-amber-500">306</span>
+                            </td>
+        
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <footer class="mt-8 text-center text-sm text-gray-400">
-                Generiert via Python Skript • 2026
-            </footer>
+
+            <div class="mt-8 flex flex-col items-center">
+                <div class="bg-black/50 backdrop-blur-md p-4 rounded-2xl border border-yellow-500/30 shadow-[0_0_20px_rgba(234,179,8,0.2)] text-center">
+                    <h2 class="text-yellow-500 font-black uppercase tracking-[0.5em] mb-3 text-xs italic">Employee of the Month</h2>
+                    <img src="employee_of_the_month.png" alt="Employee of the Month" 
+                         class="w-48 h-auto rounded-lg border-2 border-yellow-500/50 shadow-lg mx-auto overflow-hidden">
+                </div>
+            </div>
+
         </div>
+
+        <script>
+            const body = document.getElementById('main-body');
+            const lNetto = document.getElementById('label-netto');
+            const lBrutto = document.getElementById('label-brutto');
+
+            setInterval(() => {
+                if (body.classList.contains('mode-netto')) {
+                    body.classList.remove('mode-netto');
+                    body.classList.add('mode-brutto');
+                    lNetto.style.opacity = "0.3";
+                    lBrutto.style.opacity = "1";
+                } else {
+                    body.classList.remove('mode-brutto');
+                    body.classList.add('mode-netto');
+                    lNetto.style.opacity = "1";
+                    lBrutto.style.opacity = "0.3";
+                }
+            }, 10000);
+        </script>
     </body>
     </html>
     
