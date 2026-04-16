@@ -1,0 +1,85 @@
+
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Mitglieder Übersicht</title>
+    </head>
+    <body class="bg-gray-50 py-10 px-5 font-sans">
+        <div class="max-w-4xl mx-auto">
+            <header class="mb-10 text-center">
+                <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">Team Dashboard</h1>
+                <p class="text-gray-500 mt-2">Aktuelle Übersicht der Einheiten pro Mitglied</p>
+            </header>
+
+            <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase">Profil</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase">Name</th>
+                            <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase text-right">Einheiten</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+    
+                        <tr class="hover:bg-blue-50 transition-colors duration-200">
+                            <td class="px-6 py-4">
+                                <img src="https://ui-avatars.com/api/?name=Alex+Müller&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-800">Alex Müller</td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
+                                    45
+                                </span>
+                            </td>
+                        </tr>
+        
+                        <tr class="hover:bg-blue-50 transition-colors duration-200">
+                            <td class="px-6 py-4">
+                                <img src="https://ui-avatars.com/api/?name=Sarah+Schmidt&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-800">Sarah Schmidt</td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
+                                    20
+                                </span>
+                            </td>
+                        </tr>
+        
+                        <tr class="hover:bg-blue-50 transition-colors duration-200">
+                            <td class="px-6 py-4">
+                                <img src="https://ui-avatars.com/api/?name=Jordan+Dash&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-800">Jordan Dash</td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
+                                    112
+                                </span>
+                            </td>
+                        </tr>
+        
+                        <tr class="hover:bg-blue-50 transition-colors duration-200">
+                            <td class="px-6 py-4">
+                                <img src="https://ui-avatars.com/api/?name=Lina+Meyer&background=random&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-800">Lina Meyer</td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700">
+                                    8
+                                </span>
+                            </td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+            </div>
+            <footer class="mt-8 text-center text-sm text-gray-400">
+                Generiert via Python Skript • 2026
+            </footer>
+        </div>
+    </body>
+    </html>
+    
