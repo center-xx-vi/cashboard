@@ -43,7 +43,7 @@ def create_champion_website(json_file, local_gif_name):
         <meta charset="UTF-8">
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://fonts.googleapis.com/css2?family=Cantata+One&display=swap" rel="stylesheet">
-        <title>Team Cashboard Center XX/VI</title>
+        <title>Cashboard Center XX/VI</title>
         <style>
             body {{
                 background-image: url('{local_gif_name}');
@@ -199,7 +199,7 @@ def create_champion_website(json_file, local_gif_name):
     <body class="mode-netto" id="main-body">
         <div class="bg-overlay">
             <header>
-                <h1 class="font-black">Team Cashboard Center XX/VI</h1>
+                <h1 class="font-black">Cashboard Center XX/VI</h1>
             </header>
 
             <div class="table-container">
