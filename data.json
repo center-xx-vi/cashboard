@@ -1,127 +1,128 @@
 [
   {
-    "name": "Erik Baumann",
-    "netto_monate": [12, 15, 14, 18, 20, 22, 19, 15, 17, 21, 24, 28],
-    "brutto_monate": [18, 20, 19, 25, 28, 30, 25, 20, 24, 29, 32, 38]
+    "name": "Emre Arslan",
+    "anzeigename": "Emre",
+    "netto_monate": [768, 350, 816],
+    "brutto_monate": [352, 269, 1004]
   },
   {
-    "name": "Sarah Schmidt",
-    "netto_monate": [8, 10, 12, 11, 9, 14, 15, 12, 10, 13, 15, 18],
-    "brutto_monate": [12, 14, 18, 16, 13, 20, 22, 18, 15, 19, 22, 26]
+    "name": "Sven Keller",
+    "anzeigename": "Sven",
+    "netto_monate": [1612, -46, 448],
+    "brutto_monate": [5, 679, 1703]
   },
   {
-    "name": "Leon Wagner",
-    "netto_monate": [22, 25, 28, 24, 21, 30, 32, 28, 25, 29, 31, 35],
-    "brutto_monate": [30, 35, 38, 32, 28, 40, 42, 38, 35, 39, 42, 48]
+    "name": "Robin Riesch",
+    "anzeigename": "Robin",
+    "netto_monate": [171, 633, -157],
+    "brutto_monate": [165, 767, 452]
   },
   {
-    "name": "Julia Weber",
-    "netto_monate": [15, 15, 16, 14, 12, 18, 20, 18, 15, 17, 19, 22],
-    "brutto_monate": [22, 22, 23, 20, 18, 25, 28, 25, 22, 24, 27, 31]
+    "name": "Denis Stosik",
+    "anzeigename": "Stosik",
+    "netto_monate": [383, 49, 77],
+    "brutto_monate": [147, 81, 666]
   },
   {
-    "name": "Marc Fischer",
-    "netto_monate": [5, 7, 6, 8, 10, 12, 11, 9, 8, 10, 12, 15],
-    "brutto_monate": [9, 11, 10, 12, 15, 18, 16, 14, 12, 15, 18, 22]
+    "name": "Michelle Kastori",
+    "anzeigename": "Michelle",
+    "netto_monate": [547, 314, 349],
+    "brutto_monate": [665, 29, 429]
   },
   {
-    "name": "Lisa Meyer",
-    "netto_monate": [30, 32, 31, 29, 28, 35, 38, 35, 32, 34, 36, 40],
-    "brutto_monate": [42, 45, 44, 40, 39, 48, 52, 48, 45, 47, 50, 55]
+    "name": "David Sousa Almeida",
+    "anzeigename": "Sousa",
+    "netto_monate": [606, 712, -96],
+    "brutto_monate": [687, 416, 506]
   },
   {
-    "name": "Thomas Kraft",
-    "netto_monate": [10, 11, 10, 12, 14, 16, 15, 13, 11, 12, 14, 17],
-    "brutto_monate": [16, 17, 16, 19, 22, 24, 23, 20, 18, 19, 21, 25]
+    "name": "Paul Mayer",
+    "anzeigename": "Paul",
+    "netto_monate": [365, 229, 116],
+    "brutto_monate": [113, 136, 537]
   },
   {
-    "name": "Elena Voss",
-    "netto_monate": [18, 20, 22, 21, 19, 25, 24, 22, 20, 23, 25, 30],
-    "brutto_monate": [25, 28, 30, 29, 26, 35, 33, 30, 28, 32, 35, 42]
+    "name": "Milad Ghoulampour",
+    "anzeigename": "Milad",
+    "netto_monate": [2784, 1990, 746],
+    "brutto_monate": [1175, 2351, 391]
   },
   {
-    "name": "Kevin Schulz",
-    "netto_monate": [12, 12, 13, 11, 10, 15, 14, 12, 11, 13, 15, 18],
-    "brutto_monate": [18, 18, 19, 16, 15, 21, 20, 18, 16, 19, 21, 25]
+    "name": "Deniz Demirtas",
+    "anzeigename": "Deno",
+    "netto_monate": [79, -543, 224],
+    "brutto_monate": [65, 323, 676]
   },
   {
-    "name": "Maren Jung",
-    "netto_monate": [25, 24, 26, 28, 30, 35, 32, 30, 28, 31, 33, 38],
-    "brutto_monate": [35, 34, 36, 40, 42, 48, 44, 42, 40, 43, 46, 52]
+    "name": "Denis Siewerth",
+    "anzeigename": "Siewerth",
+    "netto_monate": [0, 0, 0],
+    "brutto_monate": [0, 0, 98]
   },
   {
-    "name": "Sven Berger",
-    "netto_monate": [7, 8, 9, 8, 7, 10, 11, 9, 8, 10, 11, 13],
-    "brutto_monate": [12, 13, 14, 13, 11, 15, 16, 14, 12, 15, 16, 19]
+    "name": "Enes Arslan",
+    "anzeigename": "Enes",
+    "netto_monate": [76, 66, 153],
+    "brutto_monate": [65, 0, 279]
   },
   {
-    "name": "Nina Peters",
-    "netto_monate": [14, 16, 15, 17, 19, 22, 20, 18, 16, 19, 21, 25],
-    "brutto_monate": [20, 22, 21, 24, 27, 30, 28, 25, 22, 26, 29, 34]
+    "name": "Nikolaj Kuznetsov",
+    "anzeigename": "Nikolaj",
+    "netto_monate": [0, 292, 120],
+    "brutto_monate": [168, 124, 338]
   },
   {
-    "name": "Paul Richter",
-    "netto_monate": [20, 21, 20, 22, 24, 28, 26, 24, 22, 25, 27, 31],
-    "brutto_monate": [28, 29, 28, 30, 33, 38, 36, 33, 31, 35, 38, 42]
+    "name": "Zarif Tursunov",
+    "anzeigename": "Zarif",
+    "netto_monate": [0, 0, 0],
+    "brutto_monate": [1, 0, 10]
   },
   {
-    "name": "Clara Zimmermann",
-    "netto_monate": [11, 13, 12, 14, 15, 18, 17, 15, 13, 15, 17, 20],
-    "brutto_monate": [17, 19, 18, 20, 22, 26, 24, 21, 18, 21, 24, 28]
+    "name": "Tolga Hepözkan",
+    "anzeigename": "Tolga",
+    "netto_monate": [0, 18, 240],
+    "brutto_monate": [0, 134, 373]
   },
   {
-    "name": "Olaf Neumann",
-    "netto_monate": [9, 10, 11, 10, 9, 12, 13, 11, 10, 12, 14, 16],
-    "brutto_monate": [14, 15, 16, 15, 13, 18, 19, 16, 15, 18, 21, 24]
+    "name": "Anastasia Toussa",
+    "anzeigename": "Anastasia",
+    "netto_monate": [0, 1, 71],
+    "brutto_monate": [0, 0, 117]
   },
   {
-    "name": "Hannah Weiß",
-    "netto_monate": [28, 30, 29, 31, 33, 38, 40, 38, 35, 37, 39, 44],
-    "brutto_monate": [40, 42, 41, 44, 46, 52, 55, 52, 48, 51, 54, 60]
+    "name": "David Thrun",
+    "anzeigename": "David",
+    "netto_monate": [558, 148, 32],
+    "brutto_monate": [4, 147, 58]
   },
   {
-    "name": "Felix Schwarz",
-    "netto_monate": [13, 14, 15, 14, 13, 17, 18, 16, 14, 16, 18, 21],
-    "brutto_monate": [19, 20, 22, 20, 19, 25, 26, 23, 20, 23, 26, 30]
+    "name": "Gauri Bhatia",
+    "anzeigename": "Gauri",
+    "netto_monate": [0, 124, 0],
+    "brutto_monate": [3, 129, 0]
   },
   {
-    "name": "Laura Koch",
-    "netto_monate": [16, 18, 17, 19, 21, 24, 22, 20, 18, 21, 23, 27],
-    "brutto_monate": [23, 25, 24, 27, 30, 33, 31, 28, 26, 30, 32, 38]
+    "name": "Onika Bhatia",
+    "anzeigename": "Onika",
+    "netto_monate": [0, 309, 0],
+    "brutto_monate": [62, 218, 0]
   },
   {
-    "name": "Simon Braun",
-    "netto_monate": [6, 7, 8, 7, 6, 9, 10, 8, 7, 9, 11, 13],
-    "brutto_monate": [10, 11, 12, 11, 9, 14, 15, 12, 10, 13, 16, 19]
+    "name": "Canan Ekmekci",
+    "anzeigename": "Canan",
+    "netto_monate": [0, 0, 0],
+    "brutto_monate": [0, 0, 398]
   },
   {
-    "name": "Tanja Lange",
-    "netto_monate": [21, 23, 22, 24, 26, 30, 28, 26, 24, 27, 29, 33],
-    "brutto_monate": [30, 32, 31, 34, 37, 42, 39, 37, 34, 38, 41, 46]
+    "name": "Marzieh Riazati",
+    "anzeigename": "Marzieh",
+    "netto_monate": [null, null, null],
+    "brutto_monate": [null, null, null]
   },
   {
-    "name": "Dennis Jäger",
-    "netto_monate": [12, 13, 12, 14, 16, 19, 18, 16, 14, 16, 18, 22],
-    "brutto_monate": [18, 19, 18, 21, 24, 28, 26, 24, 20, 24, 27, 32]
-  },
-  {
-    "name": "Petra Krüger",
-    "netto_monate": [19, 21, 20, 22, 24, 28, 27, 25, 23, 26, 28, 32],
-    "brutto_monate": [27, 30, 28, 31, 34, 39, 38, 35, 32, 36, 39, 45]
-  },
-  {
-    "name": "Moritz Frank",
-    "netto_monate": [10, 10, 11, 10, 9, 12, 13, 11, 10, 12, 14, 17],
-    "brutto_monate": [15, 15, 16, 15, 14, 18, 19, 16, 15, 18, 21, 25]
-  },
-  {
-    "name": "Sabine Hahn",
-    "netto_monate": [15, 17, 16, 18, 20, 23, 22, 20, 18, 21, 23, 27],
-    "brutto_monate": [22, 24, 23, 26, 29, 33, 31, 28, 26, 30, 32, 38]
-  },
-  {
-    "name": "Christian Otto",
-    "netto_monate": [14, 15, 14, 16, 18, 21, 20, 18, 16, 18, 20, 24],
-    "brutto_monate": [20, 21, 20, 23, 26, 30, 28, 26, 23, 26, 29, 34]
+    "name": "Team",
+    "anzeigename": "TEAM",
+    "netto_monate": [7527, 4687, 3435],
+    "brutto_monate": [4012, 6093, 8294]
   }
 ]
