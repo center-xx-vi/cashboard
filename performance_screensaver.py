@@ -56,6 +56,7 @@ def create_champion_website(json_file, local_gif_name):
                 font-family: 'Cantata One', serif;
                 height: 100vh;
                 width: 100vw;
+                color: white;
             }}
 
             .bg-overlay {{ 
@@ -64,29 +65,37 @@ def create_champion_website(json_file, local_gif_name):
                 width: 100vw; 
                 display: flex; 
                 flex-direction: column;
-                padding: 1vh 0.5vw;
+                padding: 0.5vh 0.5vw;
                 box-sizing: border-box;
             }}
 
             header {{
                 text-align: center;
-                height: 6vh;
+                height: 7vh; /* Etwas mehr Höhe für den größeren Titel */
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }}
 
             header h1 {{
-                font-size: 2.5vh;
-                letter-spacing: 0.3em;
+                font-size: 3.5vh; /* DEUTLICH GRÖSSER */
+                letter-spacing: 0.5em;
                 margin: 0;
-                color: rgba(255,255,255,0.9);
+                font-weight: 900;
+                text-transform: uppercase;
+                background: linear-gradient(to bottom, #fff 40%, #ccc 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                drop-shadow: 0 0 20px rgba(0,0,0,0.5);
             }}
 
             .table-container {{
                 flex-grow: 1;
                 width: 100%;
-                background: rgba(0, 0, 0, 0.2);
+                background: rgba(255, 255, 255, 0.02);
                 border: 1px solid rgba(255,255,255,0.1);
                 overflow: hidden;
-                display: flex;
+                margin-bottom: 0.5vh;
             }}
 
             table {{
@@ -97,34 +106,30 @@ def create_champion_website(json_file, local_gif_name):
             }}
 
             th, td {{
-                border: 1px solid rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.07);
                 text-align: center;
                 vertical-align: middle;
                 padding: 0 !important;
-                overflow: hidden;
             }}
 
-            /* MONATS-SPALTE */
             .col-month {{
                 width: 5.5vw;
-                font-size: 1.1vh;
+                font-size: 1vh;
                 text-transform: uppercase;
-                background: rgba(0,0,0,0.4);
-                color: #ccc;
+                background: rgba(0,0,0,0.5);
+                color: #aaa;
+                font-weight: bold;
             }}
 
-            /* NAMEN IM HEADER */
             th div.name-label {{
-                font-size: 0.65vw; /* Sehr klein, damit 25 Spalten passen */
+                font-size: 0.62vw;
                 font-weight: bold;
                 text-transform: uppercase;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                padding: 0 1px;
             }}
 
-            /* ZAHLEN-CONTAINER */
             .value-container {{
                 position: relative;
                 height: 100%;
@@ -132,13 +137,13 @@ def create_champion_website(json_file, local_gif_name):
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 0.75vw; /* Angepasste Größe für die Zahlen */
+                font-size: 0.75vw;
             }}
 
             .val-netto, .val-brutto {{
                 position: absolute;
                 width: 100%;
-                transition: opacity 1.2s ease-in-out;
+                transition: opacity 1s ease-in-out;
                 font-weight: 900;
             }}
 
@@ -150,65 +155,62 @@ def create_champion_website(json_file, local_gif_name):
             .text-netto {{ color: #a6edd2; }} 
             .text-brutto {{ color: #ffc5ab; }}
 
-            /* CHAMPION GLOW */
             .champ-glow {{
-                text-shadow: 0 0 8px rgba(255, 197, 171, 0.8);
+                text-shadow: 0 0 10px rgba(255, 197, 171, 0.9);
                 color: #fff !important;
-                font-size: 0.9vw;
+                font-size: 0.88vw;
             }}
 
             .crown-icon {{
-                font-size: 0.8vw;
+                font-size: 0.75vw;
                 display: block;
-                line-height: 1;
-                margin-bottom: 1px;
+                color: #fbbf24;
             }}
 
             .total-row {{
-                background: rgba(255,255,255,0.08);
-                height: 4vh;
+                background: rgba(255,255,255,0.12);
+                height: 5.5vh;
             }}
 
             .total-row td {{
-                font-size: 0.8vw;
+                font-size: 0.85vw;
                 font-weight: 900;
+                border-top: 2px solid rgba(255,255,255,0.2);
             }}
 
             footer {{
-                height: 5vh;
+                height: 4vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }}
 
             .legend {{
-                background: rgba(0,0,0,0.5);
-                padding: 0.5vh 3vw;
-                border-radius: 50px;
+                background: rgba(0,0,0,0.6);
+                padding: 0.2vh 2vw;
+                border-radius: 20px;
                 border: 1px solid rgba(255,255,255,0.1);
-                font-size: 1.4vh;
+                font-size: 1.2vh;
                 display: flex;
-                gap: 20px;
+                gap: 15px;
             }}
         </style>
     </head>
-    <body class="text-white mode-netto" id="main-body">
+    <body class="mode-netto" id="main-body">
         <div class="bg-overlay">
             <header>
-                <h1 class="font-black">CASHBOARD CENTER XX/VI</h1>
+                <h1 class="font-black">Team Cashboard Center XX/VI</h1>
             </header>
 
             <div class="table-container">
-                <table>
+                <table class="font-numbers">
                     <thead>
-                        <tr style="height: 5vh; background: rgba(255,255,255,0.03);">
+                        <tr style="height: 4.5vh;">
                             <th class="col-month">Monat</th>
                             {" ".join([f'''
                             <th class="relative {'bg-white/10' if i == len(members) - 1 else ''}">
                                 {'<span class="crown-icon">👑</span>' if m['name'] == champion_name else ''}
-                                <div class="name-label">
-                                    {m.get('anzeigename', m['name'])}
-                                </div>
+                                <div class="name-label">{m.get('anzeigename', m['name'])}</div>
                             </th>''' for i, m in enumerate(members)])}
                         </tr>
                     </thead>
@@ -217,8 +219,8 @@ def create_champion_website(json_file, local_gif_name):
 
     for idx, monat in enumerate(monate_namen):
         html_content += f"""
-                        <tr style="height: 6.8vh;">
-                            <td class="col-month font-bold">{monat}</td>
+                        <tr style="height: 6.4vh;">
+                            <td class="col-month">{monat}</td>
         """
         for i, m in enumerate(members):
             netto_liste = m.get("netto_monate", [])
@@ -232,7 +234,6 @@ def create_champion_website(json_file, local_gif_name):
 
             is_champ_cell = (m['name'] == champion_name and idx == last_data_index)
             b_class = "champ-glow" if is_champ_cell else ""
-
             special_col = "bg-white/5" if i == len(members) - 1 else ""
 
             html_content += f"""
@@ -245,7 +246,6 @@ def create_champion_website(json_file, local_gif_name):
             """
         html_content += "</tr>"
 
-    # TOTAL ZEILE
     html_content += """
                         <tr class="total-row">
                             <td class="col-month font-black">TOTAL</td>
@@ -253,7 +253,7 @@ def create_champion_website(json_file, local_gif_name):
     for i, m in enumerate(members):
         s_netto = sum(v for v in m.get("netto_monate", []) if v is not None)
         s_brutto = sum(v for v in m.get("brutto_monate", []) if v is not None)
-        special_col = "bg-white/15" if i == len(members) - 1 else ""
+        special_col = "bg-white/20" if i == len(members) - 1 else ""
 
         html_content += f"""
                             <td class="{special_col}">
@@ -304,7 +304,7 @@ def create_champion_website(json_file, local_gif_name):
 
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
-    print("Dashboard erfolgreich optimiert. Schriften sind nun deutlich kleiner.")
+    print("Dashboard mit vergrößertem Titel erstellt.")
 
 
 LOCAL_GIF = "background.gif"
