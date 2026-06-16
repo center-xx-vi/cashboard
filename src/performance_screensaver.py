@@ -1,5 +1,6 @@
 import json
 
+
 def create_champion_website(json_file, local_gif_name):
     try:
         with open(json_file, 'r', encoding='utf-8') as f:
@@ -109,7 +110,6 @@ def create_champion_website(json_file, local_gif_name):
             n_display = str(n_raw) if n_raw is not None else ""
             b_display = str(b_raw) if b_raw is not None else ""
 
-            # Check auf den Anzeigenamen statt den ursprünglichen "name"
             is_champ_cell = (m.get('anzeigename') == champion_name and idx == last_data_index)
             b_class = "champ-glow" if is_champ_cell else ""
             special_col = "bg-white/5" if i == len(members) - 1 else ""
@@ -142,7 +142,7 @@ def create_champion_website(json_file, local_gif_name):
                             </td>
         """
 
-    html_content += """
+    html_content += f"""
                         </tr>
                     </tbody>
                 </table>
@@ -159,19 +159,52 @@ def create_champion_website(json_file, local_gif_name):
             const body = document.getElementById('main-body');
             const lNetto = document.getElementById('label-netto');
             const lBrutto = document.getElementById('label-brutto');
-            setInterval(() => {
-                if (body.classList.contains('mode-netto')) {
+
+            // Intervall für den Wechsel zwischen Netto und Brutto (alle 10 Sekunden)
+            setInterval(() => {{
+                if (body.classList.contains('mode-netto')) {{
                     body.classList.remove('mode-netto');
                     body.classList.add('mode-brutto');
                     lBrutto.style.opacity = "1";
                     lNetto.style.opacity = "0.3";
-                } else {
+                }} else {{
                     body.classList.remove('mode-brutto');
                     body.classList.add('mode-netto');
                     lBrutto.style.opacity = "0.3";
                     lNetto.style.opacity = "1";
-                }
-            }, 10000);
+                }}
+            }}, 10000);
+
+            // --- WAKE LOCK LOGIK GEGEN STANDBY ---
+            let wakeLock = null;
+
+            async function requestWakeLock() {{
+                try {{
+                    if ('wakeLock' in navigator) {{
+                        wakeLock = await navigator.wakeLock.request('screen');
+                        console.log('Screen Wake Lock ist aktiv!');
+
+                        // Falls der Lock unerwartet verloren geht (z.B. Tab-Wechsel)
+                        wakeLock.addEventListener('release', () => {{
+                            console.log('Wake Lock wurde aufgehoben.');
+                        }});
+                    }} else {{
+                        console.warn('Wake Lock API wird von diesem Browser nicht unterstützt.');
+                    }}
+                }} catch (err) {{
+                    console.error(`${{err.name}}, ${{err.message}}`);
+                }}
+            }}
+
+            // Aktiviert den Wake Lock, sobald die Seite geladen ist
+            window.addEventListener('DOMContentLoaded', requestWakeLock);
+
+            // Reaktiviert den Wake Lock, falls die Seite kurz minimiert wurde
+            document.addEventListener('visibilitychange', async () => {{
+                if (wakeLock !== null && document.visibilityState === 'visible') {{
+                    await requestWakeLock();
+                }}
+            }});
         </script>
     </body>
     </html>
@@ -180,6 +213,7 @@ def create_champion_website(json_file, local_gif_name):
     with open("../index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     print("HTML erstellt.")
+
 
 LOCAL_GIF = "assets/background.gif"
 create_champion_website("../assets/data.json", LOCAL_GIF)

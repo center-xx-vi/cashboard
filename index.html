@@ -2292,6 +2292,8 @@
             const body = document.getElementById('main-body');
             const lNetto = document.getElementById('label-netto');
             const lBrutto = document.getElementById('label-brutto');
+
+            // Intervall für den Wechsel zwischen Netto und Brutto (alle 10 Sekunden)
             setInterval(() => {
                 if (body.classList.contains('mode-netto')) {
                     body.classList.remove('mode-netto');
@@ -2305,6 +2307,37 @@
                     lNetto.style.opacity = "1";
                 }
             }, 10000);
+
+            // --- WAKE LOCK LOGIK GEGEN STANDBY ---
+            let wakeLock = null;
+
+            async function requestWakeLock() {
+                try {
+                    if ('wakeLock' in navigator) {
+                        wakeLock = await navigator.wakeLock.request('screen');
+                        console.log('Screen Wake Lock ist aktiv!');
+
+                        // Falls der Lock unerwartet verloren geht (z.B. Tab-Wechsel)
+                        wakeLock.addEventListener('release', () => {
+                            console.log('Wake Lock wurde aufgehoben.');
+                        });
+                    } else {
+                        console.warn('Wake Lock API wird von diesem Browser nicht unterstützt.');
+                    }
+                } catch (err) {
+                    console.error(`${err.name}, ${err.message}`);
+                }
+            }
+
+            // Aktiviert den Wake Lock, sobald die Seite geladen ist
+            window.addEventListener('DOMContentLoaded', requestWakeLock);
+
+            // Reaktiviert den Wake Lock, falls die Seite kurz minimiert wurde
+            document.addEventListener('visibilitychange', async () => {
+                if (wakeLock !== null && document.visibilityState === 'visible') {
+                    await requestWakeLock();
+                }
+            });
         </script>
     </body>
     </html>
