@@ -10,7 +10,7 @@
     "netto_monate": [1612, -46, 448, 1396, 876, 634]
   },
   {
-    "anzeigename": "Robin",
+    "anzeigename": "Riesch",
     "brutto_monate": [165, 767, 452, 458, 633, 617],
     "netto_monate": [171, 633, -157, 1008, 52, -36]
 
@@ -31,7 +31,7 @@
     "netto_monate": [606, 712, -96, 325, 433, 638]
   },
   {
-    "anzeigename": "Paul M.",
+    "anzeigename": "Mayer",
     "brutto_monate": [113, 136, 537, 145, 385, 1088],
     "netto_monate": [365, 229, 116, 602, 84, 559]
   },
@@ -101,7 +101,7 @@
     "netto_monate": [null, null, null, null, 0, 0]
   },
   {
-    "anzeigename": "Paul S.",
+    "anzeigename": "Sack",
     "brutto_monate": [null, null, null, null, 0, 417],
     "netto_monate": [null, null, null, null, 0, 50]
   },
@@ -116,7 +116,7 @@
     "netto_monate": [null, null, null, null, null, null]
   },
   {
-    "anzeigename": "Robin Rath",
+    "anzeigename": "Rath",
     "brutto_monate": [null, null, null, null, null, null],
     "netto_monate": [null, null, null, null, null, null]
   },
