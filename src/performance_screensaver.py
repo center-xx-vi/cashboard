@@ -58,10 +58,10 @@ def create_champion_website(json_file, local_gif_name):
             header {{ text-align: center; height: 7vh; display: flex; align-items: center; justify-content: center; }}
             header h1 {{ font-size: 3.5vh; letter-spacing: 0.5em; margin: 0; font-weight: 900; text-transform: uppercase; background: linear-gradient(to bottom, #fff 40%, #ccc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
             .table-container {{ flex-grow: 1; width: 100%; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.1); overflow: hidden; margin-bottom: 0.5vh; }}
-            table {{ width: 100%; height: 100%; table-layout: fixed; border-collapse: collapse; }}
-            th, td {{ border: 1px solid rgba(255,255,255,0.07); text-align: center; vertical-align: middle; padding: 0 !important; }}
-            .col-month {{ width: 5.5vw; font-size: 1vh; text-transform: uppercase; background: rgba(0,0,0,0.5); color: #aaa; font-weight: bold; }}
-            th div.name-label {{ font-size: 0.62vw; font-weight: bold; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+            table {{ width: 100%; height: 100%; table-layout: auto; border-collapse: collapse; }}
+            th, td {{ border: 1px solid rgba(255,255,255,0.07); text-align: center; vertical-align: middle; padding: 0 2px !important; }}
+            .col-month {{ width: 5vw; min-width: 45px; font-size: 1vh; text-transform: uppercase; background: rgba(0,0,0,0.5); color: #aaa; font-weight: bold; }}
+            th div.name-label {{ font-size: 0.6vw; font-weight: bold; text-transform: uppercase; white-space: nowrap; }}
             .value-container {{ position: relative; height: 100%; width: 100%; display: flex; justify-content: center; align-items: center; font-size: 0.75vw; }}
             .val-netto, .val-brutto {{ position: absolute; width: 100%; transition: opacity 1s ease-in-out; font-weight: 900; }}
             .mode-netto .val-netto {{ opacity: 1; }} .mode-netto .val-brutto {{ opacity: 0; pointer-events: none; }}
