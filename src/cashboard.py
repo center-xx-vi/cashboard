@@ -12,7 +12,7 @@ def create_champion_website(json_file, local_gif_name):
         print(f"Fehler in der JSON-Datei: {e}")
         return
 
-    members = data[:25]
+    members = data[:31]
     monate_namen = ["Januar", "Februar", "März", "April", "Mai", "Juni",
                     "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
@@ -61,16 +61,16 @@ def create_champion_website(json_file, local_gif_name):
             table {{ width: 100%; height: 100%; table-layout: auto; border-collapse: collapse; }}
             th, td {{ border: 1px solid rgba(255,255,255,0.07); text-align: center; vertical-align: middle; padding: 0 2px !important; }}
             .col-month {{ width: 5vw; min-width: 45px; font-size: 1vh; text-transform: uppercase; background: rgba(0,0,0,0.5); color: #aaa; font-weight: bold; }}
-            th div.name-label {{ font-size: 0.6vw; font-weight: bold; text-transform: uppercase; white-space: nowrap; }}
-            .value-container {{ position: relative; height: 100%; width: 100%; display: flex; justify-content: center; align-items: center; font-size: 0.75vw; }}
+            th div.name-label {{ font-size: 0.48vw; font-weight: bold; text-transform: uppercase; white-space: nowrap; }}
+            .value-container {{ position: relative; height: 100%; width: 100%; display: flex; justify-content: center; align-items: center; font-size: 0.6vw; }}
             .val-netto, .val-brutto {{ position: absolute; width: 100%; transition: opacity 1s ease-in-out; font-weight: 900; }}
             .mode-netto .val-netto {{ opacity: 1; }} .mode-netto .val-brutto {{ opacity: 0; pointer-events: none; }}
             .mode-brutto .val-netto {{ opacity: 0; pointer-events: none; }} .mode-brutto .val-brutto {{ opacity: 1; }}
             .text-netto {{ color: #a6edd2; }} .text-brutto {{ color: #ffc5ab; }}
-            .champ-glow {{ text-shadow: 0 0 10px rgba(255, 197, 171, 0.9); color: #fff !important; font-size: 0.88vw; }}
-            .crown-icon {{ font-size: 0.75vw; display: block; color: #fbbf24; }}
+            .champ-glow {{ text-shadow: 0 0 10px rgba(255, 197, 171, 0.9); color: #fff !important; font-size: 0.7vw; }}
+            .crown-icon {{ font-size: 0.6vw; display: block; color: #fbbf24; }}
             .total-row {{ background: rgba(255,255,255,0.12); height: 5.5vh; }}
-            .total-row td {{ font-size: 0.85vw; font-weight: 900; border-top: 2px solid rgba(255,255,255,0.2); }}
+            .total-row td {{ font-size: 0.7vw; font-weight: 900; border-top: 2px solid rgba(255,255,255,0.2); }}
             footer {{ height: 4vh; display: flex; justify-content: center; align-items: center; }}
             .legend {{ background: rgba(0,0,0,0.6); padding: 0.2vh 2vw; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.2vh; display: flex; gap: 15px; }}
         </style>
