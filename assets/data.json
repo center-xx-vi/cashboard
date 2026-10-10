@@ -1,64 +1,64 @@
 [
   {
     "anzeigename": "Emre",
-    "brutto_monate": [352, 269, 1004, 592, 929, 878, 293, 71],
-    "netto_monate": [768, 350, 816, 128, 700, 1216, 348, 68]
+    "brutto_monate": [352, 269, 1004, 592, 929, 878, 293, 71, 892],
+    "netto_monate": [768, 350, 816, 128, 700, 1216, 348, 68, 360]
   },
   {
     "anzeigename": "Sven",
-    "brutto_monate": [5, 679, 1703, 717, 884, 522, 702, 268],
-    "netto_monate": [1612, -46, 448, 1396, 876, 634, 627, 527]
+    "brutto_monate": [5, 679, 1703, 717, 884, 522, 702, 268, 533],
+    "netto_monate": [1612, -46, 448, 1396, 876, 634, 627, 527, 348]
   },
   {
     "anzeigename": "Riesch",
-    "brutto_monate": [165, 767, 452, 458, 633, 617, 896, 114],
-    "netto_monate": [171, 633, -157, 1008, 52, -36, 1357, 355]
+    "brutto_monate": [165, 767, 452, 458, 633, 617, 896, 114, 614],
+    "netto_monate": [171, 633, -157, 1008, 52, -36, 1357, 355, 334]
 
   },
   {
     "anzeigename": "Stosik",
-    "brutto_monate": [147, 81, 666, 294, 12, 34, 123, 93],
-    "netto_monate": [383, 49, 77, 499, 140, -134, -70, 37]
+    "brutto_monate": [147, 81, 666, 294, 12, 34, 123, 93, 1],
+    "netto_monate": [383, 49, 77, 499, 140, -134, -70, 37, 27]
   },
   {
     "anzeigename": "Michelle",
-    "brutto_monate": [672, 29, 429, 698, 323, 74, 99, 191],
-    "netto_monate": [547, 314, 349, 257, 276, 571, 74, 82]
+    "brutto_monate": [672, 29, 429, 698, 323, 74, 99, 191, 508],
+    "netto_monate": [547, 314, 349, 257, 276, 571, 74, 82, 292]
   },
   {
     "anzeigename": "Sousa",
-    "brutto_monate": [687, 416, 506, 89, 804, 1107, 438, 498],
-    "netto_monate": [606, 712, -96, 325, 433, 638, 763, 361]
+    "brutto_monate": [687, 416, 506, 89, 804, 1107, 438, 498, 515],
+    "netto_monate": [606, 712, -96, 325, 433, 638, 763, 361, 337]
   },
   {
     "anzeigename": "Mayer",
-    "brutto_monate": [113, 136, 537, 145, 385, 1088, 297, 140],
-    "netto_monate": [365, 229, 116, 602, 84, 559, 925, 108]
+    "brutto_monate": [113, 136, 537, 145, 385, 1088, 297, 140, 106],
+    "netto_monate": [365, 229, 116, 602, 84, 559, 925, 108, 137]
   },
   {
     "anzeigename": "Milad",
-    "brutto_monate": [1175, 2351, 391, 1671, 1052, 2457, 1870, 2174],
-    "netto_monate": [2784, 1990, 746, 59, 623, 539, 987, 2675]
+    "brutto_monate": [1175, 2351, 391, 1671, 1052, 2457, 1870, 2174, 885],
+    "netto_monate": [2784, 1990, 746, 59, 623, 539, 987, 2675, 913]
   },
   {
     "anzeigename": "Deno",
-    "brutto_monate": [65, 323, 676, 392, 5, 53, 493, 185],
-    "netto_monate": [79, -543, 224, 718, 148, 131, 67, -221]
+    "brutto_monate": [65, 323, 676, 392, 5, 53, 493, 185, 803],
+    "netto_monate": [79, -543, 224, 718, 148, 131, 67, -221, 682]
   },
   {
     "anzeigename": "Enes",
-    "brutto_monate": [65, 0, 279, 84, 91, 204, 771, 24],
-    "netto_monate": [76, 66, 153, 90, 26, 317, 149, 240]
+    "brutto_monate": [65, 0, 279, 84, 91, 204, 771, 24, 17],
+    "netto_monate": [76, 66, 153, 90, 26, 317, 149, 240, 100]
   },
   {
     "anzeigename": "Nikolaj",
-    "brutto_monate": [168, 124, 338, 227, 269, 608, 0, 27],
-    "netto_monate": [0, 292, 120, 126, 259, 206, 575, 2]
+    "brutto_monate": [168, 124, 338, 227, 269, 608, 0, 27, 0],
+    "netto_monate": [0, 292, 120, 126, 259, 206, 575, 2, -71]
   },
   {
     "anzeigename": "Zarif",
-    "brutto_monate": [1, 0, 10, 60, 296, 7, 132, 0],
-    "netto_monate": [0, 0, 0, 17, 53, 0, 542, 2]
+    "brutto_monate": [1, 0, 10, 60, 296, 7, 132, 0, 7],
+    "netto_monate": [0, 0, 0, 17, 53, 0, 542, 2, 1]
   },
   {
     "anzeigename": "Tolga",
@@ -67,48 +67,53 @@
   },
   {
     "anzeigename": "Anastasia",
-    "brutto_monate": [0, 0, 117, 0, 0, 0, 0, null],
-    "netto_monate": [0, 1, 71, 14, 3, 7, -103, null]
+    "brutto_monate": [0, 0, 117, 0, 0, 0, 0, 0, 0],
+    "netto_monate": [0, 1, 71, 14, 3, 7, -103, -227, 0]
   },
   {
     "anzeigename": "David",
-    "brutto_monate": [4, 147, 58, 66, 799, 73, 6, 0],
-    "netto_monate": [558, 148, 32, 96, 441, 143, 45, 9]
+    "brutto_monate": [4, 147, 58, 66, 799, 73, 6, 0, 8],
+    "netto_monate": [558, 148, 32, 96, 441, 143, 45, 9, 2]
   },
   {
     "anzeigename": "Marzieh",
-    "brutto_monate": [null, null, null, 8, 483, 989, 1109, 1202],
-    "netto_monate": [null, null, null, 1, 146, 557, 164, 1968]
+    "brutto_monate": [null, null, null, 8, 483, 989, 1109, 1202, 0],
+    "netto_monate": [null, null, null, 1, 146, 557, 164, 1968, 465]
   },
   {
     "anzeigename": "Joan",
-    "brutto_monate": [null, null, null, null, 0, 289, 0, 237],
-    "netto_monate": [null, null, null, null, 0, 0, 289, 0]
+    "brutto_monate": [null, null, null, null, 0, 289, 0, 237, 174],
+    "netto_monate": [null, null, null, null, 0, 0, 289, 0, 351]
   },
   {
     "anzeigename": "Leandro",
-    "brutto_monate": [null, null, null, null, 0, 0, null, 251],
-    "netto_monate": [null, null, null, null, 0, 0, null, 251]
+    "brutto_monate": [null, null, null, null, 0, 0, 0, 251, 128],
+    "netto_monate": [null, null, null, null, 0, 0, 0, 251, 0]
   },
   {
     "anzeigename": "Suck",
-    "brutto_monate": [null, null, null, null, 0, 417, 200, 0],
-    "netto_monate": [null, null, null, null, 0, 50, 278, 87]
+    "brutto_monate": [null, null, null, null, 0, 417, 200, 0, 245],
+    "netto_monate": [null, null, null, null, 0, 50, 278, 87, 124]
   },
   {
     "anzeigename": "Sofiane",
-    "brutto_monate": [null, null, null, null, 0, 571, 105, 38],
-    "netto_monate": [null, null, null, null, 0, 85, 484, 106]
+    "brutto_monate": [null, null, null, null, 0, 571, 105, 38, 58],
+    "netto_monate": [null, null, null, null, 0, 85, 484, 106, 98]
   },
   {
     "anzeigename": "Timur",
-    "brutto_monate": [null, null, null, null, null, null, null, null],
-    "netto_monate": [null, null, null, null, null, null, null, null]
+    "brutto_monate": [null, null, null, null, null, null, null, null, 0],
+    "netto_monate": [null, null, null, null, null, null, null, null, 0]
   },
   {
-    "anzeigename": "Rath",
-    "brutto_monate": [null, null, null, null, null, null, null, null],
-    "netto_monate": [null, null, null, null, null, null, null, null]
+    "anzeigename": "Samer",
+    "brutto_monate": [null, null, null, null, null, null, null, null, 934],
+    "netto_monate": [null, null, null, null, null, null, null, null, 125]
+  },
+  {
+    "anzeigename": "Elisa",
+    "brutto_monate": [null, null, null, null, null, null, null, null, null],
+    "netto_monate": [null, null, null, null, null, null, null, null, null]
   },
   {
     "anzeigename": "TEAM",
