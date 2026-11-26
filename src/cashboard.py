@@ -12,7 +12,7 @@ def create_champion_website(json_file, local_gif_name):
         print(f"Fehler in der JSON-Datei: {e}")
         return
 
-    members = data[:31]
+    members = data[:37]
     monate_namen = ["Januar", "Februar", "März", "April", "Mai", "Juni",
                     "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
